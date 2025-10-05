@@ -1,4 +1,4 @@
-#  ChatNova
+#  ⚡ChatNova
 
 > **Powerful, clean, and flexible chat UI** for modern conversational AI.  
 > ChatNova delivers a polished messaging experience that you can connect to **any conversational backend** — OpenAI, local models, or custom APIs.
