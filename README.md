@@ -120,3 +120,4 @@ MIT License — see LICENSE for details.
 Contact
 -------
 If you’d like help integrating ChatNova into your project or want to submit ideas, open an issue or PR. Maintained by realtushartyagi. Enjoy building!
+Built by realtushartyagi — feel free to open issues, feature requests, or PRs. Thank you for checking out ChatNova!
