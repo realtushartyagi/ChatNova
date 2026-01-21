@@ -37,7 +37,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <img onClick={()=>navigate('/')} src={theme === 'dark' ? assets.logo_full : assets.logo_full_dark} alt="" className='w-full max-w-60 cursor-pointer'/>
 
       {/* New Chat Button */}
-      <button onClick={createNewChat} className='flex justify-center items-center w-full py-2 mt-10 text-white  bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm rounded-md cursor-pointer'>
+      <button onClick={createNewChat} className='flex justify-center items-center w-full py-2 mt-5 text-white  bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm rounded-md cursor-pointer'>
         <span className='mr-2 text-xl'>+</span> New Chat
       </button>
 
@@ -48,8 +48,8 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       </div>
 
       {/* Recent Chats */}
-      {chats.length > 0 && <p className='mt-4 text-sm'>Recent Chats</p>}
-      <div className='flex-1 overflow-y-scroll mt-3 text-sm space-y-3'>
+      {chats.length > 0 && <p className='mt-3 text-sm'>Recent Chats</p>}
+      <div className='flex-1 overflow-y-scroll mt-1 text-sm space-y-3'>
         {
             chats.filter((chat)=> chat.messages[0] ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase()) : chat.name.toLowerCase().includes(search.toLowerCase())).map((chat)=>(
                 <div onClick={()=> {navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}}
