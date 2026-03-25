@@ -49,7 +49,7 @@ const Credits = () => {
     <div className='max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in-up scroll-smooth pb-20'>
       <h2 className='text-3xl font-light tracking-tight text-center mb-16 xl:mt-32 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]'>Choose Your Power.</h2>
 
-      <div className='flex flex-wrap justify-center gap-8'>
+      <div className='flex overflow-x-auto md:justify-center items-stretch gap-8 pb-8 snap-x pl-2'>
         {plans.map((plan, index)=>(
           <div key={plan._id} className={`glass-panel p-8 rounded-3xl min-w-[320px] flex flex-col group hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-500 animate-slide-in-left ${plan._id === "pro" ? "border-white/30" : "border-white/5"}`} style={{animationDelay: `${index * 0.1}s`}}>
             <div className='flex-1'>
