@@ -16,8 +16,8 @@ const Loading = () => {
   },[])
 
   return (
-    <div className='bg-gradient-to-b from-[#531B81] to-[#29184B] backdrop-opacity-60 flex items-center justify-center h-screen w-screen text-white text-2xl'>
-      <div className='w-10 h-10 rounded-full border-3 border-white border-t-transparent animate-spin'></div>
+    <div className='bg-black flex items-center justify-center h-screen w-screen text-white text-2xl absolute inset-0 z-50 animate-blur-in'>
+      <div className='w-12 h-12 rounded-full border border-white/20 border-t-white animate-spin drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]'></div>
     </div>
   )
 }

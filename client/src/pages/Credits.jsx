@@ -46,24 +46,29 @@ const Credits = () => {
   if(loading) return <Loading />
 
   return (
-    <div className='max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6 lg:px-8 py-12'>
-      <h2 className='text-3xl font-semibold text-center mb-10 xl:mt-30 text-gray-800 dark:text-white'>Credit Plans</h2>
+    <div className='max-w-7xl h-screen overflow-y-scroll mx-auto px-4 sm:px-6 lg:px-8 py-16 animate-fade-in-up scroll-smooth pb-20'>
+      <h2 className='text-3xl font-light tracking-tight text-center mb-16 xl:mt-32 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]'>Choose Your Power.</h2>
 
       <div className='flex flex-wrap justify-center gap-8'>
-        {plans.map((plan)=>(
-          <div key={plan._id} className={`border border-gray-200 dark:border-purple-700 rounded-lg shadow hover:shadow-lg transition-shadow p-6 min-w-[300px] flex flex-col ${plan._id === "pro" ? "bg-purple-50 dark:bg-purple-900" : "bg-white dark:bg-transparent"}`}>
+        {plans.map((plan, index)=>(
+          <div key={plan._id} className={`glass-panel p-8 rounded-3xl min-w-[320px] flex flex-col group hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] transition-all duration-500 animate-slide-in-left ${plan._id === "pro" ? "border-white/30" : "border-white/5"}`} style={{animationDelay: `${index * 0.1}s`}}>
             <div className='flex-1'>
-              <h3 className='text-xl font-semibold text-gray-900 dark:text-white mb-2'>{plan.name}</h3>
-              <p className='text-2xl font-bold text-purple-600 dark:text-purple-300 mb-4'>${plan.price}
-                <span className='text-base font-normal text-gray-600 dark:text-purple-200'>{' '}/ {plan.credits} credits</span>
+              <h3 className='text-xl font-medium text-white mb-2 tracking-wide'>{plan.name}</h3>
+              <p className='text-3xl font-light text-white mb-6'>${plan.price}
+                <span className='text-sm font-medium text-gray-500 uppercase tracking-widest ml-2'>/ {plan.credits} credits</span>
               </p>
-              <ul className='list-disc list-inside text-sm text-gray-700 dark:text-purple-200 space-y-1'>
-                {plan.features.map((feature, index)=>(
-                  <li key={index}>{feature}</li>
+              <ul className='list-none text-sm text-gray-300 space-y-3 font-light'>
+                {plan.features.map((feature, featureIndex)=>(
+                  <li key={featureIndex} className='flex items-center gap-3'>
+                    <div className='w-1.5 h-1.5 rounded-full bg-white opacity-70'></div>
+                    <span>{feature}</span>
+                  </li>
                 ))}
               </ul>
             </div>
-            <button onClick={()=> toast.promise(purchasePlan(plan._id), {loading: 'Processing...'})} className='mt-6 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-medium py-2 rounded transition-colors cursor-pointer'>Buy Now</button>
+            <button onClick={()=> toast.promise(purchasePlan(plan._id), {loading: 'Processing...'})} className='mt-8 bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 font-medium py-3 rounded-xl transition-all duration-300 cursor-pointer tracking-wide shadow-[0_0_10px_rgba(255,255,255,0)] group-hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]'>
+              Acquire
+            </button>
           </div>
         ))}
       </div>
