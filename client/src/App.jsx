@@ -26,8 +26,8 @@ const App = () => {
     {!isMenuOpen && <img src={assets.menu_icon} className='absolute top-3 left-3 w-8 h-8 cursor-pointer md:hidden not-dark:invert' onClick={()=>setIsMenuOpen(true)}/>}
 
     {user ? (
-      <div className='dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white'>
-        <div className='flex h-screen w-screen'>
+      <div className='bg-black text-white w-screen h-screen overflow-hidden selection:bg-white/20'>
+        <div className='flex h-full w-full'>
           <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
           <Routes>
             <Route path='/' element={<ChatBox />} />
@@ -37,7 +37,7 @@ const App = () => {
         </div>
       </div>
     ) : (
-      <div className='bg-gradient-to-b from-[#242124] to-[#000000] flex items-center justify-center h-screen w-screen'>
+      <div className='bg-black flex items-center justify-center h-screen w-screen selection:bg-white/20'>
         <Login />
       </div>
     )}
