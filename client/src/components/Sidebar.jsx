@@ -64,8 +64,14 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
                         </p>
                         <p className='text-xs text-gray-500 mt-0.5'>{moment(chat.updatedAt).fromNow()}</p>
                     </div>
-                    <img src={assets.bin_icon} className='hidden group-hover:block w-4 cursor-pointer invert opacity-50 hover:opacity-100 transition-opacity' alt="Delete" 
-                    onClick={e=> toast.promise(deleteChat(e, chat._id), {loading: 'deleting...' })} />
+                    <div className='hidden group-hover:flex relative items-center justify-center'>
+                        <img src={assets.bin_icon} className='w-4 cursor-pointer invert opacity-50 hover:opacity-100 transition-opacity peer' alt="Delete" 
+                        onClick={e=> toast.promise(deleteChat(e, chat._id), {loading: 'deleting...' })} />
+                        
+                        <span className='absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-medium tracking-widest uppercase px-2 py-1 rounded-md opacity-0 peer-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-lg'>
+                            Delete
+                        </span>
+                    </div>
                 </div>
             ))
         }
@@ -90,7 +96,17 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         <div className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 transition-all duration-300 group mt-2'>
             <img src={assets.user_icon} className='w-8 h-8 rounded-full border border-white/20' alt="User" />
             <p className='flex-1 text-sm text-white font-medium truncate'>{user ? user.name : 'Sign In'}</p>
-            {user && <img onClick={(e)=> {e.stopPropagation(); logout();}} src={assets.logout_icon} className='w-4 cursor-pointer opacity-50 group-hover:opacity-100 transition-opacity invert' alt="Logout"/>}
+            {user && (
+                <div className='relative flex items-center justify-center'>
+                    <div className='p-1.5 rounded-md hover:bg-black/60 transition-colors peer'>
+                        <img onClick={(e)=> {e.stopPropagation(); logout();}} src={assets.logout_icon} className='w-4 cursor-pointer opacity-50 group-hover:opacity-100 hover:scale-110 transition-all invert' alt="Logout"/>
+                    </div>
+                    
+                    <span className='absolute right-10 top-1/2 -translate-y-1/2 bg-black backdrop-blur-md border border-white/10 text-white text-[10px] font-medium tracking-widest uppercase px-2 py-1 rounded-md opacity-0 peer-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-2xl'>
+                        Logout
+                    </span>
+                </div>
+            )}
         </div>
     </div>
 
