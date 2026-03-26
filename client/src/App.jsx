@@ -26,7 +26,7 @@ const App = () => {
 
     {user ? (
       <div className='bg-black text-white w-screen h-screen overflow-hidden selection:bg-white/20'>
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger Button — only show when sidebar is closed */}
         {!isMenuOpen && (
           <button
             onClick={() => setIsMenuOpen(true)}
@@ -36,6 +36,15 @@ const App = () => {
             <img src={assets.menu_icon} className='w-5 h-5 invert' alt="Menu"/>
           </button>
         )}
+
+        {/* Dark overlay — tapping it closes the sidebar on mobile */}
+        {isMenuOpen && (
+          <div
+            className='md:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm'
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+
         <div className='flex h-full w-full'>
           <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
           <Routes>

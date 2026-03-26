@@ -31,6 +31,12 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         }
     }
 
+    const handleChatSelect = (chat) => {
+        setSelectedChat(chat)
+        navigate('/')
+        setIsMenuOpen(false)
+    }
+
   return (
     <div className={`flex flex-col h-screen min-w-[280px] p-6 bg-black border-r border-white/10 transition-transform duration-500 max-md:absolute left-0 z-50 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
       
@@ -38,8 +44,10 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[180px] cursor-pointer mb-2 mx-auto block brightness-0 invert'/>
 
       {/* New Chat Button */}
-      {/* active:bg-white and active:text-black ensure the white fill works on mobile touch */}
-      <button onClick={createNewChat} className='flex justify-center items-center w-full py-3 mt-6 bg-white/5 hover:bg-white active:bg-white text-white hover:text-black active:text-black border border-white/10 transition-all duration-300 rounded-xl cursor-pointer animate-slide-in-left'>
+      <button
+        onClick={() => { createNewChat(); setIsMenuOpen(false); }}
+        className='flex justify-center items-center w-full py-3 mt-6 bg-white/5 hover:bg-white active:bg-white text-white hover:text-black active:text-black border border-white/10 transition-all duration-300 rounded-xl cursor-pointer animate-slide-in-left'
+      >
         <span className='mr-2 text-lg font-light'>+</span>
         <span className='text-sm tracking-wide font-medium'>New Chat</span>
       </button>
@@ -54,28 +62,33 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       {chats.length > 0 && <p className='mt-6 mb-2 text-xs uppercase tracking-widest text-gray-500 font-medium'>Recent</p>}
       <div className='flex-1 overflow-y-scroll space-y-1 pr-1'>
         {
-            chats.filter((chat)=> chat.messages[0] ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase()) : chat.name.toLowerCase().includes(search.toLowerCase())).map((chat, idx)=>(
-                <div onClick={()=> {navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}}
-                 key={chat._id} 
-                 className='p-3 px-4 rounded-xl cursor-pointer flex justify-between items-center hover:bg-white/10 active:bg-white/10 transition-all duration-300 animate-slide-in-left'
-                 style={{animationDelay: `${idx * 0.05}s`}}>
-                    <div className='truncate pr-2 flex-1'>
-                        <p className='truncate w-full text-sm text-gray-200 font-medium hover:text-white transition-colors'>
+            chats
+              .filter((chat)=> chat.messages[0]
+                ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase())
+                : chat.name.toLowerCase().includes(search.toLowerCase()))
+              .map((chat, idx)=>(
+                <div
+                  key={chat._id}
+                  onClick={() => handleChatSelect(chat)}
+                  className='p-3 px-4 rounded-xl cursor-pointer flex justify-between items-center hover:bg-white/10 active:bg-white/10 transition-all duration-300 animate-slide-in-left'
+                  style={{animationDelay: `${idx * 0.05}s`}}
+                >
+                    <div className='truncate pr-2 flex-1 min-w-0'>
+                        <p className='truncate w-full text-sm text-gray-200 font-medium'>
                             {chat.messages.length > 0 ? chat.messages[0].content.slice(0,32) : chat.name}
                         </p>
                         <p className='text-xs text-gray-500 mt-0.5'>{moment(chat.updatedAt).fromNow()}</p>
                     </div>
-                    {/* Delete icon — always visible on mobile, hover-revealed on desktop */}
-                    <div className='flex-shrink-0 ml-2'>
-                        <img
-                            src={assets.bin_icon}
-                            className='w-5 md:w-4 cursor-pointer invert opacity-40 md:opacity-0 hover:opacity-100 active:opacity-100 transition-opacity'
-                            alt="Delete"
-                            onClick={e=>toast.promise(deleteChat(e, chat._id), {loading: 'deleting...' })}
-                        />
-                    </div>
+                    {/* Delete icon — always visible */}
+                    <button
+                      className='flex-shrink-0 ml-3 p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 active:bg-red-500/30 transition-colors'
+                      onClick={e => toast.promise(deleteChat(e, chat._id), {loading: 'deleting...'})}
+                      title="Delete"
+                    >
+                      <img src={assets.bin_icon} className='w-4 h-4 invert' style={{filter:'invert(1) opacity(0.7)'}} alt="Delete" />
+                    </button>
                 </div>
-            ))
+              ))
         }
       </div>
 
@@ -89,28 +102,38 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         {/* Credit Purchases Option */}
         <div onClick={()=> {navigate('/credits'); setIsMenuOpen(false)}} className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 active:bg-white/10 transition-all duration-300 group'>
             <img src={assets.diamond_icon} className='w-4 invert opacity-70 group-hover:opacity-100 transition-opacity' alt="Credits" />
-            <div className='flex flex-col'>
-                <p className='text-sm text-gray-300 group-hover:text-white font-medium'>Credits : {user?.credits}</p>
-            </div>
+            <p className='text-sm text-gray-300 group-hover:text-white font-medium'>Credits : {user?.credits}</p>
         </div>
 
-        {/* User Account */}
-        <div className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 active:bg-white/10 transition-all duration-300 mt-2'>
-            <img src={assets.user_icon} className='w-8 h-8 rounded-full border border-white/20' alt="User" />
-            <p className='flex-1 text-sm text-white font-medium truncate'>{user ? user.name : 'Sign In'}</p>
+        {/* User Account + Logout */}
+        <div className='flex items-center gap-3 p-3 rounded-xl mt-2'>
+            <img src={assets.user_icon} className='w-8 h-8 rounded-full border border-white/20 flex-shrink-0' alt="User" />
+            <p className='flex-1 text-sm text-white font-medium truncate min-w-0'>{user ? user.name : 'Sign In'}</p>
             {user && (
                 <button
-                    onClick={(e)=>{e.stopPropagation(); logout();}}
-                    className='flex-shrink-0 p-1.5 rounded-md hover:bg-white/10 active:bg-white/10 transition-colors'
+                    onClick={(e) => { e.stopPropagation(); logout(); }}
+                    className='flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/20 border border-white/10 transition-colors'
                     title="Logout"
                 >
-                    <img src={assets.logout_icon} className='w-5 cursor-pointer opacity-70 hover:opacity-100 active:opacity-100 transition-all invert' alt="Logout"/>
+                    <img
+                      src={assets.logout_icon}
+                      style={{filter:'invert(1) opacity(0.9)'}}
+                      className='w-4 h-4'
+                      alt="Logout"
+                    />
+                    <span className='text-xs text-gray-300 font-medium hidden md:inline'>Logout</span>
                 </button>
             )}
         </div>
     </div>
 
-    <img onClick={()=> setIsMenuOpen(false)} src={assets.close_icon} className='absolute top-6 right-6 w-5 h-5 cursor-pointer md:hidden invert opacity-70 hover:opacity-100 active:opacity-100 transition-opacity' alt="Close" />
+    {/* Close button (X) — mobile only */}
+    <button
+      onClick={() => setIsMenuOpen(false)}
+      className='absolute top-5 right-5 md:hidden w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 active:bg-white/20 transition-colors'
+    >
+      <img src={assets.close_icon} className='w-4 h-4 invert' alt="Close" />
+    </button>
 
     </div>
   )
