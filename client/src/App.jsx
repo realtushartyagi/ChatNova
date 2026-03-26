@@ -26,13 +26,15 @@ const App = () => {
 
     {user ? (
       <div className='bg-black text-white w-screen h-screen overflow-hidden selection:bg-white/20'>
-        {/* Mobile Header */}
+        {/* Mobile Hamburger Button */}
         {!isMenuOpen && (
-          <div className='md:hidden absolute top-0 left-0 w-full h-16 px-5 flex items-center justify-between z-40 bg-black/80 backdrop-blur-md border-b border-white/10'>
-              <img src={assets.menu_icon} className='w-7 h-7 cursor-pointer invert opacity-80 hover:opacity-100 transition-opacity' onClick={()=>setIsMenuOpen(true)} alt="Menu"/>
-              <img src={assets.logo_full_dark} onClick={() => window.location.href = '/'} className='w-[130px] cursor-pointer brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]' alt="ChatNova"/>
-              <div className='w-7' />
-          </div>
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className='md:hidden absolute top-4 left-4 z-40 w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 border border-white/20 active:bg-white/20 transition-colors'
+            aria-label="Open menu"
+          >
+            <img src={assets.menu_icon} className='w-5 h-5 invert' alt="Menu"/>
+          </button>
         )}
         <div className='flex h-full w-full'>
           <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>

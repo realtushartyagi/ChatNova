@@ -35,12 +35,13 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
     <div className={`flex flex-col h-screen min-w-[280px] p-6 bg-black border-r border-white/10 transition-transform duration-500 max-md:absolute left-0 z-50 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
       
       {/* Logo */}
-      {/* We use the dark logo but brightness filter to ensure it's pure white if it isn't already */}
       <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[180px] cursor-pointer mb-2 mx-auto block brightness-0 invert'/>
 
       {/* New Chat Button */}
-      <button onClick={createNewChat} className='group flex justify-center items-center w-full py-3 mt-6 bg-white/5 hover:bg-white text-white hover:text-black border border-white/10 transition-all duration-300 rounded-xl cursor-pointer animate-slide-in-left'>
-        <span className='mr-2 text-lg font-light'>+</span> <span className='text-sm tracking-wide font-medium'>New Chat</span>
+      {/* active:bg-white and active:text-black ensure the white fill works on mobile touch */}
+      <button onClick={createNewChat} className='flex justify-center items-center w-full py-3 mt-6 bg-white/5 hover:bg-white active:bg-white text-white hover:text-black active:text-black border border-white/10 transition-all duration-300 rounded-xl cursor-pointer animate-slide-in-left'>
+        <span className='mr-2 text-lg font-light'>+</span>
+        <span className='text-sm tracking-wide font-medium'>New Chat</span>
       </button>
 
       {/* Search Conversations */}
@@ -56,21 +57,22 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
             chats.filter((chat)=> chat.messages[0] ? chat.messages[0]?.content.toLowerCase().includes(search.toLowerCase()) : chat.name.toLowerCase().includes(search.toLowerCase())).map((chat, idx)=>(
                 <div onClick={()=> {navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}}
                  key={chat._id} 
-                 className='p-3 px-4 rounded-xl cursor-pointer flex justify-between group hover:bg-white/10 transition-all duration-300 animate-slide-in-left'
+                 className='p-3 px-4 rounded-xl cursor-pointer flex justify-between items-center hover:bg-white/10 active:bg-white/10 transition-all duration-300 animate-slide-in-left'
                  style={{animationDelay: `${idx * 0.05}s`}}>
-                    <div className='truncate pr-2'>
-                        <p className='truncate w-full text-sm text-gray-200 font-medium group-hover:text-white transition-colors'>
+                    <div className='truncate pr-2 flex-1'>
+                        <p className='truncate w-full text-sm text-gray-200 font-medium hover:text-white transition-colors'>
                             {chat.messages.length > 0 ? chat.messages[0].content.slice(0,32) : chat.name}
                         </p>
                         <p className='text-xs text-gray-500 mt-0.5'>{moment(chat.updatedAt).fromNow()}</p>
                     </div>
-                    <div className='hidden group-hover:flex relative items-center justify-center'>
-                        <img src={assets.bin_icon} className='w-4 cursor-pointer invert opacity-50 hover:opacity-100 transition-opacity peer' alt="Delete" 
-                        onClick={e=> toast.promise(deleteChat(e, chat._id), {loading: 'deleting...' })} />
-                        
-                        <span className='absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-medium tracking-widest uppercase px-2 py-1 rounded-md opacity-0 peer-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-lg'>
-                            Delete
-                        </span>
+                    {/* Delete icon — always visible on mobile, hover-revealed on desktop */}
+                    <div className='flex-shrink-0 ml-2'>
+                        <img
+                            src={assets.bin_icon}
+                            className='w-5 md:w-4 cursor-pointer invert opacity-40 md:opacity-0 hover:opacity-100 active:opacity-100 transition-opacity'
+                            alt="Delete"
+                            onClick={e=>toast.promise(deleteChat(e, chat._id), {loading: 'deleting...' })}
+                        />
                     </div>
                 </div>
             ))
@@ -79,13 +81,13 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
 
     <div className='mt-auto pt-4 space-y-1 border-t border-white/10'>
         {/* Community Images */}
-        <div onClick={()=> {navigate('/community'); setIsMenuOpen(false)}} className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 transition-all duration-300 group'>
+        <div onClick={()=> {navigate('/community'); setIsMenuOpen(false)}} className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 active:bg-white/10 transition-all duration-300 group'>
             <img src={assets.gallery_icon} className='w-4 invert opacity-70 group-hover:opacity-100 transition-opacity' alt="Community" />
             <p className='text-sm text-gray-300 group-hover:text-white font-medium'>Community</p>
         </div>
 
         {/* Credit Purchases Option */}
-        <div onClick={()=> {navigate('/credits'); setIsMenuOpen(false)}} className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 transition-all duration-300 group'>
+        <div onClick={()=> {navigate('/credits'); setIsMenuOpen(false)}} className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 active:bg-white/10 transition-all duration-300 group'>
             <img src={assets.diamond_icon} className='w-4 invert opacity-70 group-hover:opacity-100 transition-opacity' alt="Credits" />
             <div className='flex flex-col'>
                 <p className='text-sm text-gray-300 group-hover:text-white font-medium'>Credits : {user?.credits}</p>
@@ -93,24 +95,22 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
         </div>
 
         {/* User Account */}
-        <div className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 transition-all duration-300 group mt-2'>
+        <div className='flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-white/10 active:bg-white/10 transition-all duration-300 mt-2'>
             <img src={assets.user_icon} className='w-8 h-8 rounded-full border border-white/20' alt="User" />
             <p className='flex-1 text-sm text-white font-medium truncate'>{user ? user.name : 'Sign In'}</p>
             {user && (
-                <div className='relative flex items-center justify-center'>
-                    <div className='p-1.5 rounded-md hover:bg-black/60 transition-colors peer'>
-                        <img onClick={(e)=> {e.stopPropagation(); logout();}} src={assets.logout_icon} className='w-4 cursor-pointer opacity-50 group-hover:opacity-100 hover:scale-110 transition-all invert' alt="Logout"/>
-                    </div>
-                    
-                    <span className='absolute right-10 top-1/2 -translate-y-1/2 bg-black backdrop-blur-md border border-white/10 text-white text-[10px] font-medium tracking-widest uppercase px-2 py-1 rounded-md opacity-0 peer-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-2xl'>
-                        Logout
-                    </span>
-                </div>
+                <button
+                    onClick={(e)=>{e.stopPropagation(); logout();}}
+                    className='flex-shrink-0 p-1.5 rounded-md hover:bg-white/10 active:bg-white/10 transition-colors'
+                    title="Logout"
+                >
+                    <img src={assets.logout_icon} className='w-5 cursor-pointer opacity-70 hover:opacity-100 active:opacity-100 transition-all invert' alt="Logout"/>
+                </button>
             )}
         </div>
     </div>
 
-    <img onClick={()=> setIsMenuOpen(false)} src={assets.close_icon} className='absolute top-6 right-6 w-5 h-5 cursor-pointer md:hidden invert opacity-70 hover:opacity-100 transition-opacity' alt="Close" />
+    <img onClick={()=> setIsMenuOpen(false)} src={assets.close_icon} className='absolute top-6 right-6 w-5 h-5 cursor-pointer md:hidden invert opacity-70 hover:opacity-100 active:opacity-100 transition-opacity' alt="Close" />
 
     </div>
   )
