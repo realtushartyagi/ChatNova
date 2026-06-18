@@ -8,10 +8,13 @@ const Login = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {axios, setToken} = useAppContext()
+    const {axios, setToken} = useAppContext();
+    const [submitting, setSubmitting] = useState(false);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+      if(submitting) return;
+      setSubmitting(true);
       const url = state === "login" ? '/api/user/login' : '/api/user/register'
 
       try {
@@ -24,9 +27,10 @@ const Login = () => {
         }
       } catch (error) {
         toast.error(error.message)
+      } finally {
+        setSubmitting(false);
       }
     }
-
 
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md animate-fade-in-up">
@@ -58,8 +62,8 @@ const Login = () => {
                 <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="••••••••" className="glass-input text-white rounded-xl w-full p-3 px-4 outline-none text-sm placeholder:text-gray-600" type="password" required />
             </div>
 
-            <button type='submit' className="z-10 mt-2 bg-white text-black font-medium hover:bg-gray-200 transition-colors w-full py-3 rounded-xl cursor-pointer text-sm tracking-wide">
-                {state === "register" ? "Continue" : "Sign In"}
+            <button type='submit' disabled={submitting} className="z-10 mt-2 bg-white text-black font-medium hover:bg-gray-200 disabled:opacity-50 transition-colors w-full py-3 rounded-xl cursor-pointer text-sm tracking-wide">
+                {submitting ? "Please wait..." : (state === "register" ? "Continue" : "Sign In")}
             </button>
 
             <div className="w-full text-center mt-2 z-10">
