@@ -10,21 +10,22 @@ import { stripeWebhooks } from './controllers/webhooks.js'
 
 const app = express()
 
+// Middleware
+app.use(cors())
+
 // Ensure DB connection for serverless environments
 app.use(async (req, res, next) => {
     try {
         await connectDB();
         next();
     } catch (error) {
-        res.status(500).json({ success: false, message: "Database connection failed. Please check MongoDB IP Whitelist or Vercel Environment Variables." });
+        res.status(500).json({ success: false, message: "Database connection failed. Please check MongoDB IP Whitelist or Environment Variables." });
     }
 });
 
 // Stripe Webhooks
 app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
 
-// Middleware
-app.use(cors())
 app.use(express.json())
 
 // Routes
