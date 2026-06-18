@@ -28,7 +28,12 @@ export const AppContextProvider = ({ children })=>{
             toast.error(data.message)
            }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.response?.data?.message || error.message)
+            if (error.response?.status === 401) {
+                setToken(null)
+                localStorage.removeItem('token')
+                setUser(null)
+            }
         }finally{
             setLoadingUser(false)
         }
