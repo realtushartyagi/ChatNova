@@ -12,8 +12,12 @@ const app = express()
 
 // Ensure DB connection for serverless environments
 app.use(async (req, res, next) => {
-    await connectDB();
-    next();
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Database connection failed. Please check MongoDB IP Whitelist or Vercel Environment Variables." });
+    }
 });
 
 // Stripe Webhooks
