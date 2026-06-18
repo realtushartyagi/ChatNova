@@ -10,7 +10,11 @@ import { stripeWebhooks } from './controllers/webhooks.js'
 
 const app = express()
 
-await connectDB()
+// Ensure DB connection for serverless environments
+app.use(async (req, res, next) => {
+    await connectDB();
+    next();
+});
 
 // Stripe Webhooks
 app.post('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
@@ -31,3 +35,5 @@ const PORT = process.env.PORT || 3000
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
 })
+
+export default app;
