@@ -38,28 +38,28 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
     }
 
   return (
-    <div className={`flex flex-col h-screen min-w-[280px] p-6 bg-black border-r border-white/10 transition-transform duration-500 max-md:absolute left-0 z-50 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
+    <div className={`flex flex-col h-screen w-full md:max-w-[290px] p-6 bg-white/[0.03] backdrop-blur-[30px] border-r border-white/5 transition-transform duration-500 max-md:absolute left-0 z-50 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
       
       {/* Logo */}
-      <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[180px] cursor-pointer mb-2 mx-auto block brightness-0 invert'/>
+      <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[150px] cursor-pointer mb-2 mx-auto block brightness-0 invert opacity-90'/>
 
       {/* New Chat Button */}
       <button
         onClick={createNewChat}
-        className='flex justify-center items-center w-full py-3 mt-6 bg-white/5 hover:bg-white active:bg-white text-white hover:text-black active:text-black border border-white/10 transition-all duration-300 rounded-xl cursor-pointer animate-slide-in-left'
+        className='flex justify-center items-center w-full h-[55px] mt-6 bg-gradient-to-b from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.2)] transition-all duration-300 rounded-[16px] cursor-pointer animate-slide-in-left group'
       >
-        <span className='mr-2 text-lg font-light'>+</span>
+        <span className='mr-2 text-xl font-light group-hover:text-cyan-400 transition-colors'>+</span>
         <span className='text-sm tracking-wide font-medium'>New Chat</span>
       </button>
 
       {/* Search Conversations */}
-      <div className='flex items-center gap-3 p-3 mt-5 bg-white/5 border border-white/5 rounded-xl transition-colors focus-within:border-white/30 focus-within:bg-white/10'>
+      <div className='flex items-center gap-3 p-3 mt-5 bg-white/5 backdrop-blur-md border border-white/5 rounded-[16px] transition-all focus-within:border-cyan-500/30 focus-within:shadow-[0_0_10px_rgba(0,255,255,0.1)] focus-within:bg-white/10'>
         <img src={assets.search_icon} className='w-4 invert opacity-50' alt="Search" />
-        <input onChange={(e)=>setSearch(e.target.value)} value={search} type="text" placeholder='Search...' className='text-sm bg-transparent w-full placeholder:text-gray-500 text-white outline-none'/>
+        <input onChange={(e)=>setSearch(e.target.value)} value={search} type="text" placeholder='Search...' className='text-sm bg-transparent w-full placeholder:text-[#B8BEC8] text-white outline-none'/>
       </div>
 
       {/* Recent Chats */}
-      {chats.length > 0 && <p className='mt-6 mb-2 text-xs uppercase tracking-widest text-gray-500 font-medium'>Recent</p>}
+      {chats.length > 0 && <p className='mt-8 mb-3 text-[11px] uppercase tracking-[0.2em] text-[#B8BEC8] font-semibold'>Recent</p>}
       <div className='flex-1 overflow-y-scroll space-y-1 pr-1'>
         {
             chats

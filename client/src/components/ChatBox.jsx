@@ -64,13 +64,10 @@ const ChatBox = () => {
   },[messages])
 
   return (
-    <div className='flex-1 flex flex-col justify-between m-4 md:m-8 xl:mx-20 max-md:mt-16 2xl:pr-32 relative'>
+    <div className='flex-1 flex flex-col relative w-full h-full pt-12 max-md:mt-16'>
       
-      {/* Background Ambient Glow */}
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px] pointer-events-none -z-10'></div>
-
-      {/* Chat Messages */}
-      <div ref={containerRef} className='flex-1 mb-6 overflow-y-scroll pb-10 pr-2 scroll-smooth'>
+      {/* Chat Messages Timeline */}
+      <div ref={containerRef} className='flex-1 w-full max-w-4xl mx-auto overflow-y-scroll px-6 pb-40 scroll-smooth'>
         {messages.length === 0 && (
           <div className='h-full flex flex-col items-center justify-center gap-8 animate-blur-in'>
             <img src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[260px] sm:max-w-[320px] brightness-0 invert opacity-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]'/>
@@ -85,43 +82,46 @@ const ChatBox = () => {
         {/* Loading Indicator */}
         {
           loading && <div className='flex items-center gap-2 mt-4 ml-2 animate-fade-in-up'>
-            <div className='w-2 h-2 rounded-full bg-white/50 animate-bounce'></div>
-            <div className='w-2 h-2 rounded-full bg-white/70 animate-bounce' style={{animationDelay: '0.15s'}}></div>
-            <div className='w-2 h-2 rounded-full bg-white animate-bounce' style={{animationDelay: '0.3s'}}></div>
+            <div className='w-2 h-2 rounded-full bg-cyan-400/50 shadow-[0_0_10px_rgba(0,255,255,0.5)] animate-bounce'></div>
+            <div className='w-2 h-2 rounded-full bg-cyan-400/70 shadow-[0_0_10px_rgba(0,255,255,0.5)] animate-bounce' style={{animationDelay: '0.15s'}}></div>
+            <div className='w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.8)] animate-bounce' style={{animationDelay: '0.3s'}}></div>
           </div>
         }
       </div>
 
+      {/* Floating Prompt Input Box */}
+      <div className='absolute bottom-[30px] left-1/2 -translate-x-1/2 w-full max-w-4xl px-6 z-20'>
         {mode === 'image' && (
-          <label className='inline-flex items-center gap-3 mb-4 mx-auto cursor-pointer group animate-fade-in-up'>
-            <div className='relative w-4 h-4 rounded border border-white/30 flex items-center justify-center group-hover:border-white transition-colors bg-white/5'>
-                {isPublished && <div className='w-2 h-2 bg-white rounded-sm'></div>}
-            </div>
-            <input type="checkbox" className='hidden' checked={isPublished} onChange={(e)=>setIsPublished(e.target.checked)}/>
-            <p className='text-xs text-gray-400 font-medium uppercase tracking-widest group-hover:text-white transition-colors'>Publish to Community</p>
-          </label>
+          <div className='flex justify-center mb-4'>
+            <label className='inline-flex items-center gap-3 cursor-pointer group animate-fade-in-up bg-[#081019]/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10'>
+              <div className='relative w-4 h-4 rounded border border-white/30 flex items-center justify-center group-hover:border-cyan-400 transition-colors bg-white/5'>
+                  {isPublished && <div className='w-2 h-2 bg-cyan-400 rounded-sm shadow-[0_0_8px_rgba(0,255,255,0.8)]'></div>}
+              </div>
+              <input type="checkbox" className='hidden' checked={isPublished} onChange={(e)=>setIsPublished(e.target.checked)}/>
+              <p className='text-xs text-[#B8BEC8] font-medium uppercase tracking-widest group-hover:text-white transition-colors'>Publish to Community</p>
+            </label>
+          </div>
         )}
 
-      {/* Prompt Input Box */}
-      <form onSubmit={onSubmit} className='glass-panel rounded-full w-full max-w-3xl p-2 mx-auto flex items-center gap-3 focus-within:shadow-[0_0_30px_rgba(255,255,255,0.1)] focus-within:border-white/30 transition-all duration-300 z-10 animate-slide-in-left'>
-        
-        <div className='relative ml-2'>
-            <select onChange={(e)=>setMode(e.target.value)} value={mode} className='appearance-none text-xs font-medium uppercase tracking-widest text-gray-300 bg-white/5 hover:bg-white/10 hover:text-white py-2 pl-4 pr-8 rounded-full outline-none cursor-pointer transition-colors border border-white/10'>
-            <option className='bg-black text-white' value="text">Text</option>
-            <option className='bg-black text-white' value="image">Image</option>
-            </select>
-            {/* Custom dropdown arrow */}
-            <div className='absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50'>
-                ▼
-            </div>
-        </div>
+        <form onSubmit={onSubmit} className='bg-white/[0.04] backdrop-blur-[25px] border border-white/10 rounded-full w-full p-2 flex items-center gap-3 focus-within:shadow-[0_0_40px_rgba(0,255,255,0.15)] focus-within:border-cyan-500/40 transition-all duration-500 animate-slide-in-up'>
+          
+          <div className='relative ml-2'>
+              <select onChange={(e)=>setMode(e.target.value)} value={mode} className='appearance-none text-xs font-semibold uppercase tracking-widest text-[#B8BEC8] bg-white/5 hover:bg-white/10 hover:text-white py-3 pl-5 pr-10 rounded-full outline-none cursor-pointer transition-colors border border-white/5'>
+              <option className='bg-[#0B0F14] text-white' value="text">Text</option>
+              <option className='bg-[#0B0F14] text-white' value="image">Image</option>
+              </select>
+              <div className='absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#B8BEC8] text-[10px]'>
+                  ▼
+              </div>
+          </div>
 
-        <input onChange={(e)=>setPrompt(e.target.value)} value={prompt} type="text" placeholder="Message Nova..." className='flex-1 w-full text-[15px] text-white bg-transparent outline-none placeholder:text-gray-500 px-2' required/>
-        
-        <button disabled={loading} className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 mr-1 ${prompt.length > 0 ? 'bg-white hover:bg-gray-200 hover:scale-105' : 'bg-white/10 cursor-not-allowed'}`}>
-          <img src={loading ? assets.stop_icon : assets.send_icon} className={`w-5 ${prompt.length > 0 && !loading ? 'filter invert-0 opacity-90 brightness-0' : 'invert opacity-50'}`} alt="Send" />
-        </button>
-      </form>
+          <input onChange={(e)=>setPrompt(e.target.value)} value={prompt} type="text" placeholder="Message Nova..." className='flex-1 w-full text-[16px] text-white bg-transparent outline-none placeholder:text-[#B8BEC8] px-3' required/>
+          
+          <button disabled={loading} className={`flex items-center justify-center w-[48px] h-[48px] rounded-full transition-all duration-300 mr-1 ${prompt.length > 0 ? 'bg-gradient-to-br from-cyan-400 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-105 border-0' : 'bg-white/5 border border-white/10 cursor-not-allowed'}`}>
+            <img src={loading ? assets.stop_icon : assets.send_icon} className={`w-5 ${prompt.length > 0 && !loading ? 'filter invert-0 brightness-200' : 'invert opacity-40'}`} alt="Send" />
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

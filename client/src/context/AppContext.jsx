@@ -32,7 +32,7 @@ export const AppContextProvider = ({ children })=>{
                 setToken(null)
                 localStorage.removeItem('token')
                 setUser(null)
-            } else {
+            } else if (error.message !== 'Network Error') {
                 toast.error(error.response?.data?.message || error.message)
             }
         }finally{

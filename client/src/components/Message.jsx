@@ -13,29 +13,31 @@ const Message = ({message}) => {
   return (
     <div>
       {message.role === "user" ? (
-        <div className='flex items-start justify-end my-6 gap-3 animate-fade-in-up'>
-          <div className='flex flex-col gap-1 p-4 px-6 bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.1)] rounded-3xl rounded-tr-sm max-w-2xl'>
-            <p className='text-[15px] leading-relaxed font-medium'>{message.content}</p>
-            <span className='text-[10px] text-gray-500 font-medium tracking-wide self-end mt-1 uppercase'>
+        <div className='flex items-start justify-end my-8 gap-4 animate-fade-in-up'>
+          <div className='flex flex-col gap-1 p-5 px-7 bg-white/5 border border-cyan-500/40 shadow-[0_0_20px_rgba(0,255,255,0.1)] rounded-[24px] rounded-tr-sm max-w-2xl backdrop-blur-md'>
+            <p className='text-[16px] leading-relaxed font-light text-white'>{message.content}</p>
+            <span className='text-[10px] text-[#B8BEC8] font-medium tracking-wide self-end mt-2 uppercase'>
               {moment(message.timestamp).fromNow()}
             </span>
           </div>
-          <img src={assets.user_icon} alt="User" className='w-9 h-9 mt-1 rounded-full border border-white/20'/>
+          <div className='w-10 h-10 mt-1 rounded-full border border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.4)] flex items-center justify-center bg-[#0B0F14] shrink-0'>
+             <img src={assets.user_icon} alt="User" className='w-6 h-6 invert opacity-80'/>
+          </div>
         </div>
       )
       : 
       (
-        <div className='flex items-start justify-start my-6 animate-fade-in-up' style={{animationDelay: '0.1s'}}>
-        <div className='inline-flex flex-col gap-1 p-5 px-6 max-w-3xl bg-white/5 border border-white/10 rounded-3xl rounded-tl-sm backdrop-blur-md'>
+        <div className='flex items-start justify-start my-8 animate-fade-in-up' style={{animationDelay: '0.1s'}}>
+        <div className='inline-flex flex-col gap-1 p-6 px-8 w-full max-w-3xl bg-black/40 border border-cyan-400 shadow-[0_0_40px_rgba(0,255,255,0.15)] rounded-[24px] rounded-tl-sm backdrop-blur-[30px]'>
           {message.isImage ? (
-            <img src={message.content} alt="AI output" className='w-full max-w-md mt-2 rounded-xl object-cover shadow-2xl animate-blur-in'/>
+            <img src={message.content} alt="AI output" className='w-full max-w-md mt-2 rounded-[16px] object-cover shadow-[0_0_20px_rgba(0,255,255,0.3)] animate-blur-in'/>
           ):
           (
-            <div className='text-[15px] leading-relaxed text-gray-200 reset-tw font-light tracking-wide'>
+            <div className='text-[16px] leading-[1.8] text-white reset-tw font-light tracking-wide'>
              <Markdown>{message.content}</Markdown>
             </div>
           )}
-          <span className='text-[10px] text-gray-500 font-medium tracking-wide mt-3 uppercase'>{moment(message.timestamp).fromNow()}</span>
+          <span className='text-[10px] text-[#B8BEC8] font-medium tracking-wide mt-4 uppercase'>{moment(message.timestamp).fromNow()}</span>
         </div>
         </div>
       )
