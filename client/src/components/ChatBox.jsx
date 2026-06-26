@@ -47,7 +47,16 @@ const ChatBox = () => {
         );
 
         // Send text prompt and images to backend
-        const promptToSend = text.trim() === '' ? 'Analyze the attached image.' : text;
+        let promptToSend = text.trim();
+        if (promptToSend === '') {
+          if (base64Images.length > 0) {
+            promptToSend = 'Analyze the attached image.';
+          } else if (voiceNote) {
+            promptToSend = '🎤 [Voice note recorded but no speech was transcribed]';
+          } else {
+            promptToSend = 'Attached media.';
+          }
+        }
         
         const payload = {
           chatId: selectedChat._id, 
