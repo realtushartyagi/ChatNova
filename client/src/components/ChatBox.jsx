@@ -64,7 +64,7 @@ const ChatBox = () => {
   },[messages])
 
   return (
-    <div className='flex-1 flex flex-col relative w-full h-full pt-12 max-md:mt-16'>
+    <div className='flex-1 flex flex-col relative w-full h-full pt-12 max-md:pt-[80px]'>
       
       {/* Chat Messages Timeline */}
       <div ref={containerRef} className='flex-1 w-full max-w-4xl mx-auto overflow-y-scroll px-6 pb-40 scroll-smooth'>

@@ -28,7 +28,7 @@ const App = () => {
     <Toaster />
 
     {user ? (
-      <div className='bg-[#0B0F14] text-white w-screen h-screen overflow-hidden selection:bg-white/20 relative z-0'>
+      <div className='bg-[#0B0F14] text-white w-screen h-[100dvh] overflow-hidden selection:bg-white/20 relative z-0'>
         
         {/* Layer 2: Radial gradient */}
         <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(80,120,255,0.18)_0%,transparent_70%)] pointer-events-none -z-10'></div>
