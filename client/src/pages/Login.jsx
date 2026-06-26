@@ -36,6 +36,38 @@ const Login = () => {
       }
     }
 
+    const handleOneClickLogin = async (e) => {
+      e.preventDefault();
+      if(submitting) return;
+      setSubmitting(true);
+
+      try {
+        // Try to login as demo user first
+        let res = await axios.post('/api/user/login', {email: "demo@example.com", password: "demopassword"});
+        
+        // If it fails (user doesn't exist), register the demo user
+        if (!res.data.success) {
+            res = await axios.post('/api/user/register', {name: "Demo User", email: "demo@example.com", password: "demopassword"});
+        }
+        
+        if(res.data.success){
+            setToken(res.data.token)
+            localStorage.setItem('token', res.data.token)
+            toast.success("Logged in successfully!")
+        }else{
+            toast.error(res.data.message)
+        }
+      } catch (error) {
+        if (error.message === 'Network Error') {
+            toast.error("Server is waking up (may take ~30s). Please hold on...")
+        } else {
+            toast.error(error.response?.data?.message || error.message)
+        }
+      } finally {
+        setSubmitting(false);
+      }
+    }
+
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-md animate-fade-in-up">
         <form onSubmit={handleSubmit} className="glass-panel flex flex-col gap-6 items-start p-10 py-14 w-full sm:w-[400px] text-white rounded-3xl relative overflow-hidden">
@@ -49,6 +81,21 @@ const Login = () => {
                 <p className="text-sm text-gray-400 font-light">
                     {state === "login" ? "Enter your details to proceed." : "Sign up to get started."}
                 </p>
+            </div>
+
+            <button 
+                type='button' 
+                onClick={handleOneClickLogin}
+                disabled={submitting} 
+                className="z-10 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-semibold hover:scale-[1.02] disabled:opacity-50 transition-all w-full py-3.5 rounded-xl cursor-pointer text-sm tracking-wide shadow-[0_0_20px_rgba(34,211,238,0.3)] mb-2"
+            >
+                {submitting ? "Waking up server..." : "One-Click Demo Login"}
+            </button>
+
+            <div className="w-full flex items-center gap-4 z-10 mb-2 opacity-50">
+                <div className="h-px bg-white/20 flex-1"></div>
+                <span className="text-xs font-medium uppercase tracking-widest text-white/50">OR</span>
+                <div className="h-px bg-white/20 flex-1"></div>
             </div>
 
             {state === "register" && (
@@ -66,8 +113,8 @@ const Login = () => {
                 <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="••••••••" className="glass-input text-white rounded-xl w-full p-3 px-4 outline-none text-sm placeholder:text-gray-600" type="password" required />
             </div>
 
-            <button type='submit' disabled={submitting} className="z-10 mt-2 bg-white text-black font-medium hover:bg-gray-200 disabled:opacity-50 transition-colors w-full py-3 rounded-xl cursor-pointer text-sm tracking-wide">
-                {submitting ? "Please wait..." : (state === "register" ? "Continue" : "Sign In")}
+            <button type='submit' disabled={submitting} className="z-10 mt-2 bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 disabled:opacity-50 transition-colors w-full py-3 rounded-xl cursor-pointer text-sm tracking-wide">
+                {submitting ? "Waking up server..." : (state === "register" ? "Continue with Email" : "Sign In with Email")}
             </button>
 
             <div className="w-full text-center mt-2 z-10">
