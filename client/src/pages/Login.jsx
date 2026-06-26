@@ -26,7 +26,11 @@ const Login = () => {
             toast.error(data.message)
         }
       } catch (error) {
-        toast.error(error.message)
+        if (error.message === 'Network Error') {
+            toast.error("Backend server is offline or waking up. Please try again.")
+        } else {
+            toast.error(error.response?.data?.message || error.message)
+        }
       } finally {
         setSubmitting(false);
       }

@@ -103,7 +103,7 @@ const Landing = ({ setShowLogin }) => {
             <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-16">
             
             {/* Hero Left Content */}
-            <div className="flex-1 max-w-[55%] animate-slide-in-left">
+            <div className="flex-1 w-full lg:max-w-[55%] animate-slide-in-left text-center lg:text-left flex flex-col items-center lg:items-start">
                 <h1 className="text-5xl lg:text-[60px] leading-[1.1] font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
                 Meet ChatNova
                 </h1>
@@ -116,8 +116,8 @@ const Landing = ({ setShowLogin }) => {
             </div>
 
             {/* Hero Right: Floating Chat Card Mockup */}
-            <div className="flex-1 w-full max-w-[45%] flex justify-end animate-float">
-                <div className="w-[480px] rounded-[24px] bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] p-5 relative overflow-hidden">
+            <div className="flex-1 w-full lg:max-w-[45%] flex justify-center lg:justify-end animate-float mt-12 lg:mt-0">
+                <div className="w-full max-w-[480px] rounded-[24px] bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] p-5 relative overflow-hidden">
                     {/* Purple Mockup Glow */}
                     <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/20 blur-3xl rounded-full"></div>
                     
