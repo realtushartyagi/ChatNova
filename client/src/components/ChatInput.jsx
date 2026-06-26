@@ -82,14 +82,16 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
       if (SpeechRecognition) {
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
-        recognition.interimResults = false; // Only final sentences
+        recognition.interimResults = true; // Live transcription
+        
+        const initialText = textRef.current;
         
         recognition.onresult = (event) => {
           let currentTranscript = '';
-          for (let i = event.resultIndex; i < event.results.length; ++i) {
-            currentTranscript += event.results[i][0].transcript + ' ';
+          for (let i = 0; i < event.results.length; ++i) {
+            currentTranscript += event.results[i][0].transcript;
           }
-          setText(prev => prev + currentTranscript);
+          setText(initialText + (initialText ? ' ' : '') + currentTranscript);
         };
         
         speechRecognitionRef.current = recognition;
