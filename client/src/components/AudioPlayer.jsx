@@ -74,7 +74,7 @@ const AudioPlayer = ({ audioUrl }) => {
       
       <button 
         onClick={togglePlay}
-        className="w-8 h-8 flex items-center justify-center bg-cyan-500 text-black rounded-full hover:bg-cyan-400 transition-colors shrink-0"
+        className="w-8 h-8 flex items-center justify-center bg-indigo-500 text-black rounded-full hover:bg-indigo-400 transition-colors shrink-0"
       >
         {isPlaying ? <Pause size={16} /> : <Play size={16} className="translate-x-[1px]" />}
       </button>
@@ -87,7 +87,7 @@ const AudioPlayer = ({ audioUrl }) => {
             return (
               <div 
                 key={i} 
-                className={`flex-1 rounded-full transition-colors ${isActive ? 'bg-cyan-400' : 'bg-gray-600'}`} 
+                className={`flex-1 rounded-full transition-colors ${isActive ? 'bg-indigo-400' : 'bg-gray-600'}`} 
                 style={{ height: `${Math.max(20, Math.random() * 100)}%` }}
               />
             )
@@ -102,7 +102,7 @@ const AudioPlayer = ({ audioUrl }) => {
       <a 
         href={audioUrl} 
         download="voice-note.webm" 
-        className="text-gray-400 hover:text-cyan-400 transition-colors opacity-0 group-hover:opacity-100"
+        className="text-gray-400 hover:text-indigo-400 transition-colors opacity-0 group-hover:opacity-100"
       >
         <Download size={16} />
       </a>

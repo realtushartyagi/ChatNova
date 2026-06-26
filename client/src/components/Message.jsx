@@ -18,7 +18,7 @@ const Message = ({message}) => {
       <div>
         {message.role === "user" ? (
           <div className='flex items-start justify-end my-8 gap-4 animate-fade-in-up'>
-            <div className='flex flex-col gap-1 p-5 px-7 bg-white/5 border border-cyan-500/40 shadow-[0_0_20px_rgba(0,255,255,0.1)] rounded-[24px] rounded-tr-sm max-w-2xl backdrop-blur-md'>
+            <div className='flex flex-col gap-1 p-5 px-7 bg-white/5 border border-indigo-500/40 shadow-[0_0_20px_rgba(99,102,241,0.1)] rounded-[24px] rounded-tr-sm max-w-2xl backdrop-blur-md'>
               
               {/* Attachments Rendering */}
               {message.attachments && message.attachments.length > 0 && (
@@ -35,12 +35,12 @@ const Message = ({message}) => {
                         />
                       ) : (
                         <div className="w-48 p-3 flex items-center gap-3 bg-white/5 hover:bg-white/10 transition-colors">
-                          <FileIcon size={32} className="text-cyan-400 shrink-0" />
+                          <FileIcon size={32} className="text-indigo-400 shrink-0" />
                           <div className="flex flex-col min-w-0">
                             <span className="text-sm text-white font-medium truncate">{att.name}</span>
                             <span className="text-xs text-gray-400 uppercase tracking-widest mt-0.5">{att.name.split('.').pop()} • {(att.size / 1024 / 1024).toFixed(2)} MB</span>
                           </div>
-                          <a href={URL.createObjectURL(att.file)} download={att.name} className="ml-auto text-gray-400 hover:text-cyan-400 p-1">
+                          <a href={URL.createObjectURL(att.file)} download={att.name} className="ml-auto text-gray-400 hover:text-indigo-400 p-1">
                             <Download size={16} />
                           </a>
                         </div>
@@ -74,9 +74,9 @@ const Message = ({message}) => {
         : 
         (
           <div className='flex items-start justify-start my-8 animate-fade-in-up' style={{animationDelay: '0.1s'}}>
-          <div className='inline-flex flex-col gap-1 p-6 px-8 w-full max-w-3xl bg-black/40 border border-cyan-400 shadow-[0_0_40px_rgba(0,255,255,0.15)] rounded-[24px] rounded-tl-sm backdrop-blur-[30px]'>
+          <div className='inline-flex flex-col gap-1 p-6 px-8 w-full max-w-3xl bg-black/40 border border-indigo-400 shadow-[0_0_40px_rgba(99,102,241,0.15)] rounded-[24px] rounded-tl-sm backdrop-blur-[30px]'>
             {message.isImage ? (
-              <img src={message.content} alt="AI output" className='w-full max-w-md mt-2 rounded-[16px] object-cover shadow-[0_0_20px_rgba(0,255,255,0.3)] animate-blur-in cursor-pointer' onClick={() => setFullscreenImage(message.content)} loading="lazy"/>
+              <img src={message.content} alt="AI output" className='w-full max-w-md mt-2 rounded-[16px] object-cover shadow-[0_0_20px_rgba(99,102,241,0.3)] animate-blur-in cursor-pointer' onClick={() => setFullscreenImage(message.content)} loading="lazy"/>
             ):
             (
               <div className='text-[16px] leading-[1.8] text-white reset-tw font-light tracking-wide'>

@@ -87,7 +87,7 @@ const Login = () => {
                 type='button' 
                 onClick={handleOneClickLogin}
                 disabled={submitting} 
-                className="z-10 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-semibold hover:scale-[1.02] disabled:opacity-50 transition-all w-full py-3.5 rounded-xl cursor-pointer text-sm tracking-wide shadow-[0_0_20px_rgba(34,211,238,0.3)] mb-2"
+                className="z-10 bg-gradient-to-r from-indigo-500 to-blue-600 text-black font-semibold hover:scale-[1.02] disabled:opacity-50 transition-all w-full py-3.5 rounded-xl cursor-pointer text-sm tracking-wide shadow-[0_0_20px_rgba(99,102,241,0.3)] mb-2"
             >
                 {submitting ? "Waking up server..." : "One-Click Demo Login"}
             </button>

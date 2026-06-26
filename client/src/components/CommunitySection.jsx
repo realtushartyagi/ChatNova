@@ -84,7 +84,7 @@ const CommunitySection = () => {
           quote: "It understands context so much better than anything else I've tried. Writing code is incredibly fast now.",
           name: "Sarah Chen",
           title: "Full Stack Developer",
-          avatarColor: "from-emerald-400 to-cyan-500"
+          avatarColor: "from-emerald-400 to-indigo-500"
       },
       {
           quote: "The UI is gorgeous and the response times are literally instant. I've completely switched over to ChatNova.",

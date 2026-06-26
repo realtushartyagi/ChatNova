@@ -218,8 +218,8 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
     >
       {/* Global Drag Overlay */}
       {isDragging && (
-        <div className="fixed inset-0 z-50 bg-[#0B0F14]/90 backdrop-blur-md flex items-center justify-center border-4 border-dashed border-cyan-500 m-4 rounded-[40px]">
-          <div className="flex flex-col items-center gap-4 text-cyan-400">
+        <div className="fixed inset-0 z-50 bg-[#0B0F14]/90 backdrop-blur-md flex items-center justify-center border-4 border-dashed border-indigo-500 m-4 rounded-[40px]">
+          <div className="flex flex-col items-center gap-4 text-indigo-400">
             <ImageIcon size={64} className="animate-bounce" />
             <h2 className="text-3xl font-bold tracking-tight">Drop files here</h2>
             <p className="text-gray-400">Attach images, PDFs, code files, and more</p>
@@ -231,8 +231,8 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
       {mode === 'image' && (
         <div className='flex justify-center mb-4'>
           <label className='inline-flex items-center gap-3 cursor-pointer group bg-[#081019]/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10'>
-            <div className='relative w-4 h-4 rounded border border-white/30 flex items-center justify-center group-hover:border-cyan-400 transition-colors bg-white/5'>
-                {isPublished && <div className='w-2 h-2 bg-cyan-400 rounded-sm shadow-[0_0_8px_rgba(0,255,255,0.8)]'></div>}
+            <div className='relative w-4 h-4 rounded border border-white/30 flex items-center justify-center group-hover:border-indigo-400 transition-colors bg-white/5'>
+                {isPublished && <div className='w-2 h-2 bg-indigo-400 rounded-sm shadow-[0_0_8px_rgba(99,102,241,0.8)]'></div>}
             </div>
             <input type="checkbox" className='hidden' checked={isPublished} onChange={(e)=>setIsPublished(e.target.checked)}/>
             <p className='text-xs text-[#B8BEC8] font-medium uppercase tracking-widest group-hover:text-white transition-colors'>Publish to Community</p>
@@ -240,7 +240,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
         </div>
       )}
 
-      <div className={`bg-[#121822]/90 backdrop-blur-[30px] border border-white/10 rounded-[28px] p-3 shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all duration-300 ${isRecording ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)]' : 'focus-within:border-cyan-500/40 focus-within:shadow-[0_0_40px_rgba(0,255,255,0.15)]'}`}>
+      <div className={`bg-[#121822]/90 backdrop-blur-[30px] border border-white/10 rounded-[28px] p-3 shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all duration-300 ${isRecording ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)]' : 'focus-within:border-indigo-500/40 focus-within:shadow-[0_0_40px_rgba(99,102,241,0.15)]'}`}>
         
         {/* Attachment Previews */}
         {attachments.length > 0 && (
@@ -251,7 +251,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
                   <img src={att.previewUrl} alt={att.name} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-1 bg-white/5">
-                    <FileIcon size={24} className="text-cyan-400" />
+                    <FileIcon size={24} className="text-indigo-400" />
                     <span className="text-[10px] text-gray-400 truncate w-full text-center px-1 font-medium uppercase">{att.name.split('.').pop()}</span>
                   </div>
                 )}
@@ -297,18 +297,18 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
                 onChange={(e) => handleFiles(e.target.files)}
                 accept="image/*,.pdf,.doc,.docx,.txt,.md,.rtf,.csv,.xls,.xlsx,.ppt,.pptx,.js,.ts,.jsx,.tsx,.html,.css,.scss,.json,.xml,.yaml,.yml,.py,.java,.cpp,.c,.cs,.go,.rs,.php,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.m4a,.mp4,.mov,.mkv,.avi,.webm"
               />
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2.5 text-[#B8BEC8] hover:text-cyan-400 hover:bg-cyan-500/10 rounded-xl transition-all">
+              <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2.5 text-[#B8BEC8] hover:text-indigo-400 hover:bg-indigo-500/10 rounded-xl transition-all">
                 <Paperclip size={20} />
               </button>
             </div>
 
             <div className='flex flex-col flex-1 pb-1'>
                <div className='flex items-center px-2 mb-2 opacity-60 hover:opacity-100 transition-opacity w-max'>
-                  <select onChange={(e)=>setMode(e.target.value)} value={mode} className='appearance-none text-[10px] font-bold uppercase tracking-widest text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition-colors border border-cyan-500/20'>
+                  <select onChange={(e)=>setMode(e.target.value)} value={mode} className='appearance-none text-[10px] font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 py-1 pl-3 pr-6 rounded-lg outline-none cursor-pointer transition-colors border border-indigo-500/20'>
                     <option className='bg-[#0B0F14] text-white' value="text">Text Generation</option>
                     <option className='bg-[#0B0F14] text-white' value="image">Image Generation</option>
                   </select>
-                  <div className='pointer-events-none -ml-4 text-cyan-400 text-[8px]'>▼</div>
+                  <div className='pointer-events-none -ml-4 text-indigo-400 text-[8px]'>▼</div>
                </div>
               <textarea
                 ref={textareaRef}
@@ -331,7 +331,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
                 <button 
                   type="submit" 
                   disabled={loading} 
-                  className={`flex items-center justify-center p-3 rounded-full transition-all duration-300 ${loading ? 'bg-white/5 opacity-50 cursor-not-allowed' : 'bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)] text-black'}`}
+                  className={`flex items-center justify-center p-3 rounded-full transition-all duration-300 ${loading ? 'bg-white/5 opacity-50 cursor-not-allowed' : 'bg-indigo-500 hover:bg-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.4)] text-black'}`}
                 >
                   <Send size={20} className={loading ? 'opacity-50' : 'translate-x-0.5'} />
                 </button>

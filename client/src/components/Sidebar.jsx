@@ -46,14 +46,14 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       {/* New Chat Button */}
       <button
         onClick={createNewChat}
-        className='flex justify-center items-center w-full h-[55px] mt-6 bg-gradient-to-b from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/10 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(0,255,255,0.2)] transition-all duration-300 rounded-[16px] cursor-pointer animate-slide-in-left group'
+        className='flex justify-center items-center w-full h-[55px] mt-6 bg-gradient-to-b from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 text-white border border-white/10 hover:border-indigo-500/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.2)] transition-all duration-300 rounded-[16px] cursor-pointer animate-slide-in-left group'
       >
-        <span className='mr-2 text-xl font-light group-hover:text-cyan-400 transition-colors'>+</span>
+        <span className='mr-2 text-xl font-light group-hover:text-indigo-400 transition-colors'>+</span>
         <span className='text-sm tracking-wide font-medium'>New Chat</span>
       </button>
 
       {/* Search Conversations */}
-      <div className='flex items-center gap-3 p-3 mt-5 bg-white/5 backdrop-blur-md border border-white/5 rounded-[16px] transition-all focus-within:border-cyan-500/30 focus-within:shadow-[0_0_10px_rgba(0,255,255,0.1)] focus-within:bg-white/10'>
+      <div className='flex items-center gap-3 p-3 mt-5 bg-white/5 backdrop-blur-md border border-white/5 rounded-[16px] transition-all focus-within:border-indigo-500/30 focus-within:shadow-[0_0_10px_rgba(99,102,241,0.1)] focus-within:bg-white/10'>
         <img src={assets.search_icon} className='w-4 invert opacity-50' alt="Search" />
         <input onChange={(e)=>setSearch(e.target.value)} value={search} type="text" placeholder='Search...' className='text-sm bg-transparent w-full placeholder:text-[#B8BEC8] text-white outline-none'/>
       </div>

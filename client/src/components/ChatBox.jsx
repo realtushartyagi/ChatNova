@@ -119,9 +119,9 @@ const ChatBox = () => {
         {/* Loading Indicator */}
         {
           loading && <div className='flex items-center gap-2 mt-4 ml-2 animate-fade-in-up'>
-            <div className='w-2 h-2 rounded-full bg-cyan-400/50 shadow-[0_0_10px_rgba(0,255,255,0.5)] animate-bounce'></div>
-            <div className='w-2 h-2 rounded-full bg-cyan-400/70 shadow-[0_0_10px_rgba(0,255,255,0.5)] animate-bounce' style={{animationDelay: '0.15s'}}></div>
-            <div className='w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(0,255,255,0.8)] animate-bounce' style={{animationDelay: '0.3s'}}></div>
+            <div className='w-2 h-2 rounded-full bg-indigo-400/50 shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-bounce'></div>
+            <div className='w-2 h-2 rounded-full bg-indigo-400/70 shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-bounce' style={{animationDelay: '0.15s'}}></div>
+            <div className='w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(99,102,241,0.8)] animate-bounce' style={{animationDelay: '0.3s'}}></div>
           </div>
         }
       </div>

@@ -31,14 +31,14 @@ const RightAIPanel = () => {
     <div className='hidden xl:flex flex-col w-[260px] h-full p-6 border-l border-white/5 bg-[#081019]/80 backdrop-blur-3xl z-10' style={{animationDirection: 'reverse'}}>
       
       {/* Top Title */}
-      <h2 className='text-2xl font-light text-white tracking-wide mb-6 drop-shadow-[0_0_15px_rgba(136,247,255,0.4)]'>
+      <h2 className='text-2xl font-light text-white tracking-wide mb-6 drop-shadow-[0_0_15px_rgba(165,180,252,0.4)]'>
         AI Core
       </h2>
 
       {/* 3D Core Viewport */}
       <div className='flex-1 w-full relative flex items-center justify-center min-h-[250px] mb-8'>
           {/* Ambient background glow behind the 3D model */}
-          <div className='absolute inset-0 bg-cyan-500/10 blur-[50px] rounded-full pointer-events-none'></div>
+          <div className='absolute inset-0 bg-indigo-500/10 blur-[50px] rounded-full pointer-events-none'></div>
           
           <div className='w-full h-full absolute inset-0'>
               <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
@@ -55,7 +55,7 @@ const RightAIPanel = () => {
           <div className='space-y-3'>
               <p className='text-xs text-[#B8BEC8] font-medium tracking-wide'>Processing Speed</p>
               <div className='w-full h-1.5 bg-white/10 rounded-full overflow-hidden'>
-                  <div className='h-full bg-gradient-to-r from-cyan-600 to-cyan-300 w-[75%] rounded-full shadow-[0_0_10px_rgba(136,247,255,0.6)]'></div>
+                  <div className='h-full bg-gradient-to-r from-indigo-600 to-indigo-300 w-[75%] rounded-full shadow-[0_0_10px_rgba(165,180,252,0.6)]'></div>
               </div>
           </div>
 
