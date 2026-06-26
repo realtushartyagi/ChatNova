@@ -17,6 +17,13 @@ const ChatBox = () => {
   const [mode, setMode] = useState('text')
   const [isPublished, setIsPublished] = useState(false)
 
+  const fileToBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
   const onSubmit = async (text, attachments = [], voiceNote = null) => {
     try {
       if(!user) return toast('Login to send message')
@@ -32,9 +39,24 @@ const ChatBox = () => {
             voiceNote: voiceNote
         }])
 
-        // Send text prompt to backend (mock backend ignores files)
-        const promptToSend = text.trim() === '' ? 'Attached media.' : text;
-        const {data} = await axios.post(`/api/message/${mode}`, {chatId: selectedChat._id, prompt: promptToSend, isPublished}, {headers: { Authorization: token }})
+        // Convert attached images to base64
+        const base64Images = await Promise.all(
+          attachments
+            .filter(a => a.isImage)
+            .map(a => fileToBase64(a.file))
+        );
+
+        // Send text prompt and images to backend
+        const promptToSend = text.trim() === '' ? 'Analyze the attached image.' : text;
+        
+        const payload = {
+          chatId: selectedChat._id, 
+          prompt: promptToSend, 
+          isPublished,
+          images: base64Images
+        };
+
+        const {data} = await axios.post(`/api/message/${mode}`, payload, {headers: { Authorization: token }})
 
         if(data.success){
           setMessages(prev => [...prev, data.reply])

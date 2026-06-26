@@ -15,17 +15,30 @@ export const textMessageController = async (req, res) => {
             return res.json({success: false, message: "You don't have enough credits to use this feature"})
         }
 
-        const {chatId, prompt} = req.body
+        const {chatId, prompt, images} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
         chat.messages.push({role: "user", content: prompt, timestamp: Date.now(), isImage: false})
 
+        const useVision = images && images.length > 0;
+        const modelToUse = useVision ? "llama-3.2-90b-vision-preview" : "llama-3.3-70b-versatile";
+
+        const messageContent = useVision 
+            ? [
+                { type: "text", text: prompt },
+                ...images.map(imgData => ({
+                    type: "image_url",
+                    image_url: { url: imgData }
+                }))
+              ]
+            : prompt;
+
         const { choices } = await openai.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+        model: modelToUse,
         messages: [
             {
                 role: "user",
-                content: prompt,
+                content: messageContent,
             },
         ],
     });

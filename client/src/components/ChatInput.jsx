@@ -21,9 +21,16 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
+  const speechRecognitionRef = useRef(null);
+  const textRef = useRef(text);
 
   const fileInputRef = useRef(null);
   const textareaRef = useRef(null);
+
+  // Keep textRef updated
+  useEffect(() => {
+    textRef.current = text;
+  }, [text]);
 
   // Focus textarea on load
   useEffect(() => {
@@ -54,9 +61,10 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const audioUrl = URL.createObjectURL(audioBlob);
         
-        onSend('', attachments, { url: audioUrl, blob: audioBlob });
+        onSend(textRef.current, attachments, { url: audioUrl, blob: audioBlob });
         
         setAttachments([]);
+        setText('');
         setIsRecording(false);
         setRecordingTime(0);
         stream.getTracks().forEach(track => track.stop());
@@ -68,6 +76,26 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1);
       }, 1000);
+
+      // Start Speech Recognition
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false; // Only final sentences
+        
+        recognition.onresult = (event) => {
+          let currentTranscript = '';
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            currentTranscript += event.results[i][0].transcript + ' ';
+          }
+          setText(prev => prev + currentTranscript);
+        };
+        
+        speechRecognitionRef.current = recognition;
+        recognition.start();
+      }
+
     } catch (err) {
       toast.error('Microphone access denied or unavailable.');
     }
@@ -77,6 +105,9 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       clearInterval(timerRef.current);
+      if (speechRecognitionRef.current) {
+        speechRecognitionRef.current.stop();
+      }
     }
   };
 
@@ -84,8 +115,12 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       clearInterval(timerRef.current);
+      if (speechRecognitionRef.current) {
+        speechRecognitionRef.current.stop();
+      }
       setIsRecording(false);
       setRecordingTime(0);
+      setText(''); // clear text since we cancelled
       audioChunksRef.current = [];
     }
   };
