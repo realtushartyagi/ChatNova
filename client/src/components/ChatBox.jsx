@@ -4,6 +4,36 @@ import { assets } from '../assets/assets'
 import Message from './Message'
 import ChatInput from './ChatInput'
 import toast from 'react-hot-toast'
+import * as pdfjsLib from 'pdfjs-dist'
+import mammoth from 'mammoth'
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+const extractPdfText = async (file) => {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  let fullText = '';
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const pageText = textContent.items.map(item => item.str).join(' ');
+    fullText += pageText + '\n';
+  }
+  return fullText;
+};
+
+const extractDocxText = async (file) => {
+  const arrayBuffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return result.value;
+};
+
+const extractTextFile = (file) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});
 
 const ChatBox = () => {
 
@@ -46,9 +76,48 @@ const ChatBox = () => {
             .map(a => fileToBase64(a.file))
         );
 
+        // Extract text from document attachments
+        const textAttachments = await Promise.all(
+          attachments
+            .filter(a => !a.isImage)
+            .map(async (a) => {
+              try {
+                let content = '';
+                const extension = a.name.split('.').pop().toLowerCase();
+                
+                if (extension === 'pdf') {
+                  content = await extractPdfText(a.file);
+                } else if (['doc', 'docx'].includes(extension)) {
+                  content = await extractDocxText(a.file);
+                } else {
+                  content = await extractTextFile(a.file);
+                }
+                
+                // Truncate to ~25000 chars to avoid token limits
+                if (content.length > 25000) {
+                  content = content.substring(0, 25000) + '\n\n... [Content truncated due to size limit]';
+                }
+                
+                return { name: a.name, content };
+              } catch (err) {
+                console.error(`Failed to parse ${a.name}:`, err);
+                return null;
+              }
+            })
+        );
+
         // Send text prompt and images to backend
         let promptToSend = text.trim();
-        if (promptToSend === '') {
+        
+        const validTextAttachments = textAttachments.filter(Boolean);
+        if (validTextAttachments.length > 0) {
+          promptToSend += '\n\n';
+          validTextAttachments.forEach(fileData => {
+            promptToSend += `--- Attached File: ${fileData.name} ---\n${fileData.content}\n--- End of File: ${fileData.name} ---\n\n`;
+          });
+        }
+        
+        if (promptToSend.trim() === '') {
           if (base64Images.length > 0) {
             promptToSend = 'Analyze the attached image.';
           } else if (voiceNote) {
