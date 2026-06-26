@@ -4,8 +4,8 @@ import { assets } from '../assets/assets'
 import Message from './Message'
 import ChatInput from './ChatInput'
 import toast from 'react-hot-toast'
-import * as pdfjsLib from 'pdfjs-dist'
-import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url'
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs'
+import pdfWorkerUrl from 'pdfjs-dist/legacy/build/pdf.worker.mjs?url'
 import mammoth from 'mammoth'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
@@ -99,9 +99,13 @@ const ChatBox = () => {
                   content = content.substring(0, 25000) + '\n\n... [Content truncated due to size limit]';
                 }
                 
-                return { name: a.name, content };
+                return {
+                  name: a.name,
+                  content: content
+                };
               } catch (err) {
                 console.error(`Failed to parse ${a.name}:`, err);
+                toast.error(`Failed to read content of ${a.name}`);
                 return null;
               }
             })

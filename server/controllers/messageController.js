@@ -15,10 +15,10 @@ export const textMessageController = async (req, res) => {
             return res.json({success: false, message: "You don't have enough credits to use this feature"})
         }
 
-        const {chatId, prompt, images} = req.body
+        const {chatId, prompt, images, attachments} = req.body
 
         const chat = await Chat.findOne({userId, _id: chatId})
-        chat.messages.push({role: "user", content: prompt, timestamp: Date.now(), isImage: false})
+        chat.messages.push({role: "user", content: prompt, timestamp: Date.now(), isImage: false, attachments: attachments || []})
 
         const useVision = images && images.length > 0;
         const modelToUse = useVision ? "llama-3.2-90b-vision-preview" : "llama-3.3-70b-versatile";
@@ -33,15 +33,24 @@ export const textMessageController = async (req, res) => {
               ]
             : prompt;
 
+        const apiMessages = [
+            { role: "system", content: "You are Nova, an intelligent AI assistant. Use Markdown for formatting." }
+        ];
+
+        chat.messages.forEach((msg, index) => {
+            if (msg.isImage) return;
+            
+            if (index === chat.messages.length - 1) {
+                apiMessages.push({ role: "user", content: messageContent });
+            } else {
+                apiMessages.push({ role: msg.role === "assistant" ? "assistant" : "user", content: msg.content });
+            }
+        });
+
         const { choices } = await openai.chat.completions.create({
-        model: modelToUse,
-        messages: [
-            {
-                role: "user",
-                content: messageContent,
-            },
-        ],
-    });
+            model: modelToUse,
+            messages: apiMessages,
+        });
 
     const reply = {...choices[0].message, timestamp: Date.now(), isImage: false}
     res.json({success: true, reply})

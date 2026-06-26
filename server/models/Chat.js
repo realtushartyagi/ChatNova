@@ -11,6 +11,7 @@ const ChatSchema = new mongoose.Schema({
             role: { type: String, required: true },
             content: { type: String, required: true },
             timestamp: { type: Number, required: true },
+            attachments: { type: Array, default: [] }
         }
     ]
 }, {timestamps: true})
