@@ -294,7 +294,10 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
                 multiple 
                 className="hidden" 
                 ref={fileInputRef} 
-                onChange={(e) => handleFiles(e.target.files)}
+                onChange={(e) => {
+                  handleFiles(e.target.files);
+                  e.target.value = null;
+                }}
                 accept="image/*,.pdf,.doc,.docx,.txt,.md,.rtf,.csv,.xls,.xlsx,.ppt,.pptx,.js,.ts,.jsx,.tsx,.html,.css,.scss,.json,.xml,.yaml,.yml,.py,.java,.cpp,.c,.cs,.go,.rs,.php,.zip,.rar,.7z,.tar,.gz,.mp3,.wav,.ogg,.m4a,.mp4,.mov,.mkv,.avi,.webm"
               />
               <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2.5 text-[#B8BEC8] hover:text-indigo-400 hover:bg-indigo-500/10 rounded-xl transition-all">
