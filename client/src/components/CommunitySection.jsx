@@ -206,9 +206,9 @@ const CommunitySection = () => {
                     <h3 className="text-3xl font-bold text-white mb-4 tracking-tight">Stay Updated</h3>
                     <p className="text-purple-200/70">Join our newsletter to get the latest updates on models, features, and community events.</p>
                 </div>
-                <div className="relative z-10 w-full max-w-md flex gap-2">
-                    <input type="email" placeholder="hello@example.com" className="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-purple-500/50 transition-colors placeholder:text-gray-600" />
-                    <button className="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors flex items-center gap-2">
+                <div className="relative z-10 w-full max-w-md flex flex-col sm:flex-row gap-3">
+                    <input type="email" placeholder="hello@example.com" className="flex-1 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-purple-500/50 transition-colors placeholder:text-gray-600" />
+                    <button className="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
                         Subscribe <Send size={16} />
                     </button>
                 </div>
