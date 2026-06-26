@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 import * as pdfjsLib from 'pdfjs-dist'
 import mammoth from 'mammoth'
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
 const extractPdfText = async (file) => {
   const arrayBuffer = await file.arrayBuffer();
@@ -131,7 +131,14 @@ const ChatBox = () => {
           chatId: selectedChat._id, 
           prompt: promptToSend, 
           isPublished,
-          images: base64Images
+          images: base64Images,
+          attachments: attachments.map(a => ({
+            id: a.id,
+            name: a.name,
+            size: a.size,
+            type: a.type,
+            isImage: a.isImage
+          }))
         };
 
         const {data} = await axios.post(`/api/message/${mode}`, payload, {headers: { Authorization: token }})

@@ -13,6 +13,8 @@ const Message = ({message}) => {
     Prism.highlightAll()
   },[message.content])
 
+  const displayContent = message.content?.split('\n\n--- Attached File:')[0] || '';
+
   return (
     <>
       <div>
@@ -26,13 +28,19 @@ const Message = ({message}) => {
                   {message.attachments.map(att => (
                     <div key={att.id} className="relative rounded-2xl overflow-hidden bg-black/40 border border-white/10 group">
                       {att.isImage ? (
-                        <img 
-                          src={att.previewUrl} 
-                          alt={att.name} 
-                          className="w-24 h-24 object-cover cursor-pointer hover:opacity-80 transition-opacity" 
-                          onClick={() => setFullscreenImage(att.previewUrl)}
-                          loading="lazy"
-                        />
+                        att.previewUrl ? (
+                          <img 
+                            src={att.previewUrl} 
+                            alt={att.name} 
+                            className="w-24 h-24 object-cover cursor-pointer hover:opacity-80 transition-opacity" 
+                            onClick={() => setFullscreenImage(att.previewUrl)}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-24 h-24 flex items-center justify-center bg-white/5">
+                            <span className="text-xs text-indigo-400 font-medium">Image Attached</span>
+                          </div>
+                        )
                       ) : (
                         <div className="w-48 p-3 flex items-center gap-3 bg-white/5 hover:bg-white/10 transition-colors">
                           <FileIcon size={32} className="text-indigo-400 shrink-0" />
@@ -40,9 +48,11 @@ const Message = ({message}) => {
                             <span className="text-sm text-white font-medium truncate">{att.name}</span>
                             <span className="text-xs text-gray-400 uppercase tracking-widest mt-0.5">{att.name.split('.').pop()} • {(att.size / 1024 / 1024).toFixed(2)} MB</span>
                           </div>
-                          <a href={URL.createObjectURL(att.file)} download={att.name} className="ml-auto text-gray-400 hover:text-indigo-400 p-1">
-                            <Download size={16} />
-                          </a>
+                          {att.file && (
+                            <a href={URL.createObjectURL(att.file)} download={att.name} className="ml-auto text-gray-400 hover:text-indigo-400 p-1">
+                              <Download size={16} />
+                            </a>
+                          )}
                         </div>
                       )}
                     </div>
@@ -58,8 +68,8 @@ const Message = ({message}) => {
               )}
 
               {/* Text Content */}
-              {message.content && (
-                <p className='text-[16px] leading-relaxed font-light text-white'>{message.content}</p>
+              {displayContent && (
+                <p className='text-[16px] leading-relaxed font-light text-white'>{displayContent}</p>
               )}
 
               <span className='text-[10px] text-[#B8BEC8] font-medium tracking-wide self-end mt-2 uppercase'>
