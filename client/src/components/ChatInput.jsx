@@ -23,6 +23,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
   const timerRef = useRef(null);
   const speechRecognitionRef = useRef(null);
   const textRef = useRef(text);
+  const isRecordingRef = useRef(false);
 
   const fileInputRef = useRef(null);
   const textareaRef = useRef(null);
@@ -66,12 +67,14 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
         setAttachments([]);
         setText('');
         setIsRecording(false);
+        isRecordingRef.current = false;
         setRecordingTime(0);
         stream.getTracks().forEach(track => track.stop());
       };
 
       mediaRecorder.start();
       setIsRecording(true);
+      isRecordingRef.current = true;
       setRecordingTime(0);
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1);
@@ -87,6 +90,8 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
         const initialText = textRef.current;
         
         recognition.onresult = (event) => {
+          if (!isRecordingRef.current) return;
+          
           let currentTranscript = '';
           for (let i = 0; i < event.results.length; ++i) {
             currentTranscript += event.results[i][0].transcript;
@@ -105,6 +110,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && isRecording) {
+      isRecordingRef.current = false;
       mediaRecorderRef.current.stop();
       clearInterval(timerRef.current);
       if (speechRecognitionRef.current) {
@@ -121,6 +127,7 @@ const ChatInput = ({ onSend, loading, mode, setMode, isPublished, setIsPublished
         speechRecognitionRef.current.stop();
       }
       setIsRecording(false);
+      isRecordingRef.current = false;
       setRecordingTime(0);
       setText(''); // clear text since we cancelled
       audioChunksRef.current = [];
