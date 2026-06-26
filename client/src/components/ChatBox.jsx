@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useAppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
 import Message from './Message'
+import ChatInput from './ChatInput'
 import toast from 'react-hot-toast'
 
 const ChatBox = () => {
@@ -13,20 +14,27 @@ const ChatBox = () => {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const [prompt, setPrompt] = useState('')
   const [mode, setMode] = useState('text')
   const [isPublished, setIsPublished] = useState(false)
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (text, attachments = [], voiceNote = null) => {
     try {
-      e.preventDefault() 
       if(!user) return toast('Login to send message')
         setLoading(true)
-        const promptCopy = prompt
-        setPrompt('')
-        setMessages(prev => [...prev, {role: 'user', content: prompt, timestamp: Date.now(), isImage: false }])
+        
+        // Push user message with attachments visually
+        setMessages(prev => [...prev, {
+            role: 'user', 
+            content: text, 
+            timestamp: Date.now(), 
+            isImage: false,
+            attachments: attachments,
+            voiceNote: voiceNote
+        }])
 
-        const {data} = await axios.post(`/api/message/${mode}`, {chatId: selectedChat._id, prompt, isPublished}, {headers: { Authorization: token }})
+        // Send text prompt to backend (mock backend ignores files)
+        const promptToSend = text.trim() === '' ? 'Attached media.' : text;
+        const {data} = await axios.post(`/api/message/${mode}`, {chatId: selectedChat._id, prompt: promptToSend, isPublished}, {headers: { Authorization: token }})
 
         if(data.success){
           setMessages(prev => [...prev, data.reply])
@@ -38,12 +46,10 @@ const ChatBox = () => {
           }
         }else{
           toast.error(data.message)
-          setPrompt(promptCopy)
         }
     } catch (error) {
       toast.error(error.message)
     }finally{
-      setPrompt('')
       setLoading(false)
     }
   }
@@ -91,36 +97,14 @@ const ChatBox = () => {
 
       {/* Floating Prompt Input Box */}
       <div className='absolute bottom-[30px] left-1/2 -translate-x-1/2 w-full max-w-4xl px-6 z-20'>
-        {mode === 'image' && (
-          <div className='flex justify-center mb-4'>
-            <label className='inline-flex items-center gap-3 cursor-pointer group animate-fade-in-up bg-[#081019]/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10'>
-              <div className='relative w-4 h-4 rounded border border-white/30 flex items-center justify-center group-hover:border-cyan-400 transition-colors bg-white/5'>
-                  {isPublished && <div className='w-2 h-2 bg-cyan-400 rounded-sm shadow-[0_0_8px_rgba(0,255,255,0.8)]'></div>}
-              </div>
-              <input type="checkbox" className='hidden' checked={isPublished} onChange={(e)=>setIsPublished(e.target.checked)}/>
-              <p className='text-xs text-[#B8BEC8] font-medium uppercase tracking-widest group-hover:text-white transition-colors'>Publish to Community</p>
-            </label>
-          </div>
-        )}
-
-        <form onSubmit={onSubmit} className='bg-white/[0.04] backdrop-blur-[25px] border border-white/10 rounded-full w-full p-2 flex items-center gap-3 focus-within:shadow-[0_0_40px_rgba(0,255,255,0.15)] focus-within:border-cyan-500/40 transition-all duration-500 animate-slide-in-up'>
-          
-          <div className='relative ml-2'>
-              <select onChange={(e)=>setMode(e.target.value)} value={mode} className='appearance-none text-xs font-semibold uppercase tracking-widest text-[#B8BEC8] bg-white/5 hover:bg-white/10 hover:text-white py-3 pl-5 pr-10 rounded-full outline-none cursor-pointer transition-colors border border-white/5'>
-              <option className='bg-[#0B0F14] text-white' value="text">Text</option>
-              <option className='bg-[#0B0F14] text-white' value="image">Image</option>
-              </select>
-              <div className='absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#B8BEC8] text-[10px]'>
-                  ▼
-              </div>
-          </div>
-
-          <input onChange={(e)=>setPrompt(e.target.value)} value={prompt} type="text" placeholder="Message Nova..." className='flex-1 w-full text-[16px] text-white bg-transparent outline-none placeholder:text-[#B8BEC8] px-3' required/>
-          
-          <button disabled={loading} className={`flex items-center justify-center w-[48px] h-[48px] rounded-full transition-all duration-300 mr-1 ${prompt.length > 0 ? 'bg-gradient-to-br from-cyan-400 to-blue-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.5)] hover:scale-105 border-0' : 'bg-white/5 border border-white/10 cursor-not-allowed'}`}>
-            <img src={loading ? assets.stop_icon : assets.send_icon} className={`w-5 ${prompt.length > 0 && !loading ? 'filter invert-0 brightness-200' : 'invert opacity-40'}`} alt="Send" />
-          </button>
-        </form>
+        <ChatInput 
+            onSend={onSubmit} 
+            loading={loading} 
+            mode={mode} 
+            setMode={setMode} 
+            isPublished={isPublished} 
+            setIsPublished={setIsPublished} 
+        />
       </div>
     </div>
   )
