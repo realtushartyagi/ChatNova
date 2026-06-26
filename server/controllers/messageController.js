@@ -21,7 +21,7 @@ export const textMessageController = async (req, res) => {
         chat.messages.push({role: "user", content: prompt, timestamp: Date.now(), isImage: false, attachments: attachments || []})
 
         const useVision = images && images.length > 0;
-        const modelToUse = useVision ? "llama-3.2-90b-vision-preview" : "llama-3.3-70b-versatile";
+        const modelToUse = useVision ? "meta-llama/llama-4-scout-17b-16e-instruct" : "llama-3.3-70b-versatile";
 
         const messageContent = useVision 
             ? [
