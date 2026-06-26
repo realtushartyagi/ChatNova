@@ -5,9 +5,10 @@ import Message from './Message'
 import ChatInput from './ChatInput'
 import toast from 'react-hot-toast'
 import * as pdfjsLib from 'pdfjs-dist'
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url'
 import mammoth from 'mammoth'
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 
 const extractPdfText = async (file) => {
   const arrayBuffer = await file.arrayBuffer();
