@@ -42,10 +42,10 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
       
       {/* Logo */}
       <div onClick={()=>navigate('/')} className='cursor-pointer mb-2 mx-auto text-center flex items-center justify-center gap-1 group pb-2'>
-        <span className='text-3xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]'>
+        <span className='text-4xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]'>
           Nova
         </span>
-        <span className='text-3xl font-light tracking-widest text-white/90'>
+        <span className='text-4xl font-light tracking-widest text-white/90'>
           Ai
         </span>
       </div>
