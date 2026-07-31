@@ -188,7 +188,7 @@ const ChatBox = () => {
       <div ref={containerRef} className='flex-1 w-full max-w-4xl mx-auto overflow-y-scroll px-6 pb-40 scroll-smooth'>
         {messages.length === 0 && (
           <div className='h-full flex flex-col items-center justify-center gap-8 animate-blur-in'>
-            <img src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[260px] sm:max-w-[320px] brightness-0 invert opacity-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]'/>
+            <img src={assets.logo_full_dark} alt="NovaAi" className='w-full max-w-[260px] sm:max-w-[320px] brightness-0 invert opacity-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]'/>
             <p className='text-4xl sm:text-6xl text-center text-white tracking-tighter font-extralight opacity-80'>
               What can I help with?
             </p>

@@ -53,7 +53,7 @@ const CommunitySection = () => {
         buttonText: "View Repository",
         icon: <Code2 size={32} className="text-white" />,
         color: "hover:border-white/50 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]",
-        link: "https://github.com/realtushartyagi/ChatNova"
+        link: "https://github.com/realtushartyagi/NovaAi"
     },
     {
         title: "Twitter / X",
@@ -87,7 +87,7 @@ const CommunitySection = () => {
           avatarColor: "from-emerald-400 to-indigo-500"
       },
       {
-          quote: "The UI is gorgeous and the response times are literally instant. I've completely switched over to ChatNova.",
+          quote: "The UI is gorgeous and the response times are literally instant. I've completely switched over to NovaAi.",
           name: "Marcus Wright",
           title: "Product Designer",
           avatarColor: "from-orange-400 to-pink-500"

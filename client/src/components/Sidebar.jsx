@@ -41,7 +41,7 @@ const Sidebar = ({ isMenuOpen, setIsMenuOpen }) => {
     <div className={`flex flex-col h-[100dvh] w-full md:max-w-[290px] p-6 bg-white/[0.03] backdrop-blur-[30px] border-r border-white/5 transition-transform duration-500 max-md:absolute left-0 z-50 ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
       
       {/* Logo */}
-      <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="ChatNova" className='w-full max-w-[150px] cursor-pointer mb-2 mx-auto block brightness-0 invert opacity-90'/>
+      <img onClick={()=>navigate('/')} src={assets.logo_full_dark} alt="NovaAi" className='w-full max-w-[150px] cursor-pointer mb-2 mx-auto block brightness-0 invert opacity-90'/>
 
       {/* New Chat Button */}
       <button

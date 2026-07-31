@@ -1,14 +1,14 @@
-#  ⚡ChatNova
+#  ⚡NovaAi
 
 > **Powerful, clean, and flexible chat UI** for modern conversational AI.  
-> ChatNova delivers a polished messaging experience that you can connect to **any conversational backend** — OpenAI, local models, or custom APIs.
+> NovaAi delivers a polished messaging experience that you can connect to **any conversational backend** — OpenAI, local models, or custom APIs.
 
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/realtushartyagi/ChatNova?style=social" alt="GitHub stars"/>
-  <img src="https://img.shields.io/github/languages/top/realtushartyagi/ChatNova" alt="Top Language"/>
-  <img src="https://img.shields.io/github/last-commit/realtushartyagi/ChatNova" alt="Last Commit"/>
+  <img src="https://img.shields.io/github/stars/realtushartyagi/NovaAi?style=social" alt="GitHub stars"/>
+  <img src="https://img.shields.io/github/languages/top/realtushartyagi/NovaAi" alt="Top Language"/>
+  <img src="https://img.shields.io/github/last-commit/realtushartyagi/NovaAi" alt="Last Commit"/>
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"/>
 </p>
 
@@ -29,7 +29,7 @@
 ---
 
 ## ✨ Overview
-ChatNova is a **user-friendly chat interface** designed as the **front-end layer** for bot-driven experiences.  
+NovaAi is a **user-friendly chat interface** designed as the **front-end layer** for bot-driven experiences.  
 It focuses on speed, accessibility, and delightful conversations while being **adaptable to any backend**.  
 
 💡 Perfect for:
@@ -62,8 +62,8 @@ It focuses on speed, accessibility, and delightful conversations while being **a
 ## ⚡ Installation
 Clone the repository:
 ```bash
-git clone https://github.com/realtushartyagi/ChatNova.git
-cd ChatNova
+git clone https://github.com/realtushartyagi/NovaAi.git
+cd NovaAi
 
 
 Install:
@@ -119,5 +119,5 @@ MIT License — see LICENSE for details.
 
 Contact
 -------
-If you’d like help integrating ChatNova into your project or want to submit ideas, open an issue or PR. Maintained by realtushartyagi. Enjoy building!
-Built by realtushartyagi — feel free to open issues, feature requests, or PRs. Thank you for checking out ChatNova!
+If you’d like help integrating NovaAi into your project or want to submit ideas, open an issue or PR. Maintained by realtushartyagi. Enjoy building!
+Built by realtushartyagi — feel free to open issues, feature requests, or PRs. Thank you for checking out NovaAi!

@@ -69,7 +69,7 @@ const Landing = ({ setShowLogin }) => {
                 onClick={() => scrollToSection('home')}
                 className="font-bold text-xl tracking-tight text-white flex items-center gap-2 cursor-pointer"
             >
-                ChatNova
+                NovaAi
             </div>
             <div className="hidden md:flex items-center gap-2 text-[15px] font-medium text-gray-400">
                 <button 
@@ -105,7 +105,7 @@ const Landing = ({ setShowLogin }) => {
             {/* Hero Left Content */}
             <div className="flex-1 w-full lg:max-w-[55%] animate-slide-in-left text-center lg:text-left flex flex-col items-center lg:items-start">
                 <h1 className="text-5xl lg:text-[60px] leading-[1.1] font-extrabold text-white mb-6 tracking-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                Meet ChatNova
+                Meet NovaAi
                 </h1>
                 <p className="text-[#A1A1AA] text-lg leading-[1.6] max-w-[450px] mb-10 font-normal">
                 Experience the future of conversational AI. Unleash the power of our advanced neural network models instantly.
@@ -123,7 +123,7 @@ const Landing = ({ setShowLogin }) => {
                     
                     {/* Top Bar */}
                     <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4 relative z-10">
-                        <span className="font-semibold text-lg tracking-tight">ChatNova</span>
+                        <span className="font-semibold text-lg tracking-tight">NovaAi</span>
                         <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-xs font-bold shadow-[0_0_15px_rgba(139,92,246,0.5)]">AI</div>
                     </div>
 
